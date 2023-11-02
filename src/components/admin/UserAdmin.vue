@@ -1,12 +1,12 @@
 <template>
     <div class="user-admin">
 
-        <b-form >
+        <b-form @submit="onSubmit">
             <input id="user-id" type="hidden" v-model="user.id" />
             <b-row>
                 <b-col md="6" sm="12">
-                    <b-form-group label="Nome:" label-for="user-name" class="has-validation">
-                        <b-form-input id="user-name" type="text"
+                    <b-form-group label="Nome:" label-for="name">
+                        <b-form-input id="name" type="text"
                             v-model="user.name" required
                             :readonly="mode === 'remove'"
                             placeholder="Informe o Nome do Usuário..." />
@@ -51,7 +51,7 @@
             <b-row>
                 <b-col xs="12">
                     <b-button variant="primary" v-if="mode === 'save'"
-                        @click="save">Salvar</b-button>
+                        @click="onSubmit">Salvar</b-button>
                     <b-button variant="danger" v-if="mode === 'remove'"
                         @click="remove">Excluir</b-button>
                     <b-button class="ml-2" @click="reset">Cancelar</b-button>
@@ -144,7 +144,14 @@ export default {
             this.mode = mode
             this.user = { ...user }
             
-        }
+        },
+         onSubmit(event) {
+           
+
+            event.preventDefault()
+           
+            alert(JSON.stringify(this.user))
+         },
     },
     mounted() {
         this.loadUsers()

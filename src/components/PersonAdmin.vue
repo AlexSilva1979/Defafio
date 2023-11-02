@@ -6,8 +6,8 @@
            
             <b-row>
                 <b-col md="6" sm="12">
-                    <b-form-group label="Nome:" label-for="person-name" class="has-validation">
-                        <b-form-input id="person-name" type="text"
+                    <b-form-group label="Nome:" label-for="person.name" class="has-validation">
+                        <b-form-input id="person.name" type="text"
                             v-model="person.name" required
                            placeholder="Informe o Nome..." />
                     </b-form-group>
@@ -30,8 +30,9 @@
                 </b-col>
                 <b-col md="6" sm="12">
                     <b-form-group label="Perfil do usuário:">
-                        <b-form-select class="form-control" v-model="person.profileId" :readonly="mode === 'remove'">
-                            <option v-for="(profile, index) in profiles" :key="index" v-bind:value="profile.id">
+                        <b-form-select class="form-control" v-model="person.profile" :readonly="mode === 'remove'">
+                            <option v-for="(profile, index) in profiles" :key="index" v-bind:value="profile.id"
+                                >
                                 {{profile.name}}
                             </option>
                         </b-form-select>
@@ -72,7 +73,8 @@ export default {
         return {
             mode: 'save',
             person: {},
-            profiles: []
+            profiles: [],
+            id: this.$route.params.id
         }
     },
     methods: {
@@ -110,6 +112,15 @@ export default {
             
         },
         loadPerson(person, mode = 'save') {
+            const id = this.id ? `/${this.id}` : ''
+
+            const url = `${baseApiUrl}/person${id}`
+            axios.get(url).then(res => {
+                this.person = res.data
+            })
+            console.log(url)
+            console.log(this.person)
+
             this.mode = mode
             this.person = { ...person }
             

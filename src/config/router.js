@@ -28,12 +28,12 @@ const routes = [{
  },
  {
     name: 'PersonAdmin',
-    path: '/personAdmin',
+    path: '/person',
     component: PersonAdmin,
     meta: { requiresLogin: true }
  },
  {
-    name: 'PersonAdmin-id',
+    name: 'personAdmin',
     path: '/personAdmin/:id',
     component: PersonAdmin,
     meta: { requiresLogin: true }
